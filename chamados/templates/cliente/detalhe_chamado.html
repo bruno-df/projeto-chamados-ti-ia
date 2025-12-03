@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Detalhes do Chamado ID #{{ chamado.id }}</h2>
+<p><strong>Status:</strong> {{ chamado.get_status_display }}</p>
+<p><strong>Título:</strong> {{ chamado.titulo }}</p>
+<hr>
+<p><strong>Sua Descrição:</strong><br>{{ chamado.descricao }}</p>
+
+<div class="ai-box">
+    <h3>🤖 Análise da IA</h3>
+    <p><strong>Categoria Detectada:</strong> {{ chamado.categoria }}</p>
+    <p><strong>Sugestão Automática:</strong><br> {{ chamado.sugestao_ia }}</p>
+</div>
+
+{% if chamado.solucao_tecnico %}
+    <div style="background-color: #dff0d8; padding: 15px; border: 1px solid #d6e9c6; margin-top: 20px;">
+        <h3>✅ Solução do Técnico</h3>
+        <p>{{ chamado.solucao_tecnico }}</p>
+    </div>
+{% endif %}
+
+<a href="{% url 'meus_chamados' %}" class="btn btn-primary">Voltar</a>
+{% endblock %}

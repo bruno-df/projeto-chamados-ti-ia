@@ -1,0 +1,33 @@
+# Arquivos de ambiente
+.env
+
+# Banco de dados local
+db.sqlite3
+
+# Virtual environment
+venv/
+.venv/
+
+# Compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de cache do Django
+*.log
+*.pot
+*.pyc
+*.swp
+
+# Pasta de configurações do VSCode e IDEs
+.vscode/
+.idea/
+
+# Arquivos de migração que não foram aplicados (opcional)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Arquivos de sistema
+Thumbs.db
+.DS_Store

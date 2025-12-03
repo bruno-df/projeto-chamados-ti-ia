@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Gerenciar Chamado ID #{{ chamado.id }}</h2>
+<p><strong>Cliente:</strong> {{ chamado.cliente.username }}</p>
+<p><strong>Descrição:</strong> {{ chamado.descricao }}</p>
+<p><strong>Sugestão dada pela IA:</strong> {{ chamado.sugestao_ia }}</p>
+
+<hr>
+
+{% if chamado.status == 'ENCERRADO' %}
+    <h3>Este chamado foi encerrado.</h3>
+    <p><strong>Solução:</strong> {{ chamado.solucao_tecnico }}</p>
+    <a href="{% url 'painel_tecnico' %}" class="btn btn-primary">Voltar</a>
+
+{% else %}
+
+    {% if chamado.status == 'ABERTO' %}
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="acao" value="assumir">
+            <button type="submit" class="btn btn-primary">Assumir Chamado (Iniciar Atendimento)</button>
+        </form>
+    {% endif %}
+
+    {% if chamado.status == 'EM_ATENDIMENTO' %}
+        <div style="background-color: #fff3cd; padding: 15px; margin-bottom: 15px;">
+            Este chamado está em atendimento por: <strong>{{ chamado.tecnico.username }}</strong>
+        </div>
+        
+        <h3>Encerrar Chamado</h3>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="acao" value="encerrar">
+            <label>Descreva a solução aplicada:</label>
+            <textarea name="solucao" required></textarea>
+            <button type="submit" class="btn btn-success">Registrar Solução e Encerrar</button>
+        </form>
+    {% endif %}
+
+{% endif %}
+{% endblock %}

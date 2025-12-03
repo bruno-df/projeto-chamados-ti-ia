@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h2>Meus Chamados</h2>
+    <a href="{% url 'chat_view' %}" class="btn btn-primary">+ Novo chamado</a>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Prioridade (IA)</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for chamado in chamados %}
+        <tr>
+            <td>#{{ chamado.id }}</td>
+            <td>{{ chamado.titulo }}</td>
+            <td>{{ chamado.get_status_display }}</td>
+            <td><span class="tag {{ chamado.prioridade|lower }}">{{ chamado.get_prioridade_display }}</span></td>
+            <td><a href="{% url 'detalhe_chamado' chamado.id %}">Ver Detalhes</a></td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">Você ainda não abriu nenhum chamado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

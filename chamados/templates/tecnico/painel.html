@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Painel do Técnico</h2>
+<p>Chamados ordenados por prioridade e data.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Categoria (IA)</th>
+            <th>Título</th>
+            <th>Prioridade</th>
+            <th>Status</th>
+            <th>Ação</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tbody>
+        {% for chamado in chamados %}
+        <tr>
+            <td>#{{ chamado.id }}</td>
+            <td>{{ chamado.categoria }}</td>
+            <td>{{ chamado.titulo }}</td>
+            <td><span class="tag {{ chamado.prioridade|lower }}">{{ chamado.prioridade }}</span></td>
+            <td>{{ chamado.get_status_display }}</td>
+            <td>
+                <a href="{% url 'atender_chamado' chamado.id %}" class="btn btn-primary" style="margin:0; padding: 5px 10px;">Gerenciar</a>
+                
+                <a href="{% url 'excluir_chamado' chamado.id %}" 
+                   class="btn btn-danger" 
+                   style="margin-left: 5px; padding: 5px 10px;"
+                   onclick="return confirm('Tem certeza que deseja apagar este chamado permanentemente?');">
+                   Excluir
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    </tbody>
+</table>
+{% endblock %}
