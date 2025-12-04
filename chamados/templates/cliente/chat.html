@@ -64,16 +64,17 @@
         if (e.key === 'Enter') enviarMensagem();
     }
 
+    // pega o texto, remove espaços, se estiver vazio não faz nada.
     async function enviarMensagem() {
         const input = document.getElementById('user-input');
         const texto = input.value.trim();
         if (!texto) return;
 
-        // 1. Adiciona a mensagem do usuário na tela
+        // adiciona a mensagem do usuário na tela
         adicionarBalao(texto, 'msg-user');
-        input.value = ''; // Limpa o campo
+        input.value = '';
 
-        // 2. Envia para o Django (Backend)
+        // envia para o Django e espera a resposta dele
         try {
             const response = await fetch("{% url 'processar_mensagem' %}", {
                 method: 'POST',
@@ -81,12 +82,13 @@
                 headers: { 'Content-Type': 'application/json' }
             });
 
+            // espera e transforma em JSON
             const data = await response.json();
 
-            // 3. Adiciona a resposta do sistema na tela
+            // adiciona a resposta do sistema na tela
             adicionarBalao(data.resposta, 'msg-ia');
 
-            // Se a resposta contiver "sucesso", mostra um botão para voltar
+            // se a resposta contiver "sucesso", mostra um botão para voltar
             if (data.resposta.includes("sucesso")) {
                 setTimeout(() => {
                     const chatBox = document.getElementById('chat-box');
@@ -111,7 +113,7 @@
         div.className = `mensagem ${classe}`;
         div.innerText = texto;
         chatBox.appendChild(div);
-        chatBox.scrollTop = chatBox.scrollHeight; // Rola para baixo
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
 {% endblock %}

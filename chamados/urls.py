@@ -4,7 +4,6 @@ from . import views
 urlpatterns = [
     # Rotas Cliente
     path('', views.meus_chamados, name='meus_chamados'),
-    path('novo/', views.novo_chamado, name='novo_chamado'),
     path('chamado/<int:id>/', views.detalhe_chamado, name='detalhe_chamado'),
     
     # Rotas Técnico
